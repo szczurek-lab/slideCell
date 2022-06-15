@@ -1,0 +1,104 @@
+---
+title: "Exemplary usage of slideCell: Synthetic Lethality inference with Cell line gene knock-out experiments"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  fig.width=10, fig.height=8,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r echo=FALSE}
+devtools::load_all()
+```
+
+Load the package
+```{r setup}
+library(slideCell)
+```
+
+
+
+Load gene knockdown experimental data sets included in the package.
+
+sens_Achilles_AC - 436  cell  lines  screened  with  Avana  CRISPR-Cas9  genome-scale  knockout  library, results processed using CERES algorithm.
+
+Broad Institute Cancer Dependency Map; Cancer Data Science (2018): Cancer Dependency Map, CRISPR Avana dataset 18Q2 (Avana_public_18Q2). figshare. Fileset. doi:10.6084/m9.figshare.6205118.v1
+
+Robin M. Meyers, Jordan G. Bryan, James M. McFarland, Barbara A. Weir, ... David E. Root, William C. Hahn, Aviad Tsherniak. Computational correction of copy number effect improves specificity of CRISPR-Cas9 essentiality screens in cancer cells. Nature Genetics 2017 October 49:1779–1784. doi:10.1038/ng.3984
+
+sens_Achilles_Demeter - 501 cell lines screened with an RNAi library, results processed using DEMETER algorithm
+
+Achilles 2.20.2, Aviad Tsherniak, Francisca Vazquez, Phil G. Montgomery, Barbara A. Weir, et al. Defining a cancer Dependency Map. Cell July 27, 2017. DOI: j.cell.2017.06.010
+
+```{r}
+data("sens_Achilles_AC")
+data("sens_Achilles_Demeter")
+```
+
+sens_Drive_Ataris - Read counts for 398 cell lines screened for 7837 genes using an average of 20 shRNAs per gene, results processed using Ataris algorithm.
+
+sens_Drive_RSA - Read counts for 398 cell lines screened for 7837 genes using an average of 20 shRNAs per gene, results processed using RSA algorithm.
+
+McDonald, E. Robert et al. (2017). Project DRIVE: A Compendium of Cancer Dependencies and Synthetic Lethal Relationships Uncovered by Large-Scale, Deep RNAi Screening. Cell 170, 577-592
+
+```{r}
+data("sens_Drive_Ataris")
+data("sens_Drive_RSA")
+```
+
+
+
+Load exemplary information about geneA mutations in cancer cell lines
+```{r}
+data("gene_cl_mut_matrix")
+```
+
+Load exemplary list of geneA geneB pairs to verify SL potential
+```{r}
+data("exemp_SL_pairs")
+```
+
+Check ARID1B dependency in ARID1A mutated subpopulation of cell lines in Achilles CRISPR experimental data - test the first pair with Wilcoxon rank sum test
+
+```{r}
+spid(exemp_SL_pairs[1,], sens_matrix1 = sens_Achilles_AC, alt_matrix1=gene_cl_mut_matrix, experiment_name = "Achilles AC", plot=T)
+```
+
+Illustrate ARID1B dependency in ARID1A mutated cell lines for all exemplary experimental data sets with 4 waterfall plots
+IMPORTANT: this is just an example with default dependency matrices and alteration matrix,
+user can provide own experimental results as input
+```{r}
+x <- plot_many_waterfalls(exemp_SL_pairs[1,])
+plot(x)
+```
+
+Check ARID1B dependency in ARID1A mutated cell lines with Wilcoxon rank sum test for exemplary SL pairs and all default experimental data sets
+(printed warning means that for some data sets geneA or geneB were not present and could not be tested)
+IMPORTANT: this is just an example with default dependency matrices and alteration matrix,
+user can provide own experimental results as input
+
+```{r}
+wilcoxon_results <- verify_sl_pairs(exemp_SL_pairs[1:10,])
+```
+
+
+
+Perform ARID1B dependency enrichment for ARID1A altered cell lines 
+```{r}
+spea(exemp_SL_pairs[1,], sens_matrix1 = sens_Achilles_AC, alt_matrix1=gene_cl_mut_matrix, name = "Achilles_AC", plot=T)
+```
+
+
+
+

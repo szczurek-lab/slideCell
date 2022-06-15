@@ -1,0 +1,12 @@
+
+Nonsense_Mutation
+Splice_Site
+Start_Codon_SNP
+Start_Codon_Del
+Start_Codon_Ins
+Frame_Shift_Del
+Frame_Shift_Ins
+De_novo_Start_OutOfFrame
+Missense_Mutation - 3 out of 5 Annovar algorithms return TRUE
+
+

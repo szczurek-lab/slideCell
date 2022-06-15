@@ -1,0 +1,22 @@
+Package: slideCell
+Title: Synthetic Lethality Integrated Discovery Engine - SPID and SPEA cell line tests
+Version: 0.1.0
+Authors@R: 
+    person(given = "Magda",
+           family = "Markowska",
+           role = c("aut", "cre"),
+           email = "magda.markowska@gmail.com")
+Description: Predicting synthetic lethal gene A gene B infractions using high-throughput gene dependence screens performed on cancer cell lines from CCLE.   The package includes 4 preprocessed data sets: 2 from project DRIVE (Ataris and RSA - the same RNAi experiment, different dependency calculating algorithms) and 2 from project Achilles (Demeter - RNAi experiment, AC - CRISPR-Cas9) curated in 2018, with CCLE cell lines as rows and silenced genes B in columns. It also includes matrix with information about mutations present in the cell lines with CCLE cell lines as rows and mutated genes A in columns.    It contains two methods for SL discovery: SPID i.e. Wilcoxon rank-sum test and SPEA i.e. Enrichment Analysis, which check SL potential of user defined list of potential SL pairs and also plotting functions.
+License: GPL (>= 2)
+Depends: R (>= 3.0.0)
+Imports: fgsea, ggplot2, gridExtra, grid, ggpubr
+URL: https://github.com/szczurek-lab/slideCell
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+
